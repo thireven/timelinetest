@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+    <link href="timeline.css" rel="stylesheet"/>
+    <title>Timeline Test</title>
+    <script src="https://code.jquery.com/jquery-2.2.0.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.4.2/Sortable.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/velocity/1.2.3/velocity.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/velocity/1.2.3/velocity.ui.min.js"></script>
+</head>
+
+<body>
+
+<section id="timeline-container">
+  <ol class="timeline-list" id="test">
+    <li class="timeline-item">
+      <div class="bg"></div>
+      <h3>MVP</h3>
+      <ol>
+        <li class="timeline-sub-item">
+          <div class="title">Incorporation</div>
+          <div class="status-container">
+            Status: <span class="status">Incomplete</span>
+          </div>
+        </li>
+        <li class="timeline-sub-item">
+          <div class="title">Post-Incorporation</div>
+          <div class="status-container">
+            Status: <span class="status">Incomplete</span>
+          </div>
+        </li>
+      </ol>
+    </li>
+
+    <li class="timeline-item">
+      <div class="bg"></div>
+      <h3>MVP</h3>
+      <ol>
+        <li class="timeline-sub-item">
+          <div class="title">Incorporation</div>
+          <div class="status-container">
+            Status: <span class="status">Incomplete</span>
+          </div>
+        </li>
+        <li class="timeline-sub-item">
+          <div class="title">Post-Incorporation</div>
+          <div class="status-container">
+            Status: <span class="status">Incomplete</span>
+          </div>
+        </li>
+      </ol>
+    </li>
+  </ol>
+</section>
+
+<div id="template-container" style="display: none;">
+  <svg class="circle" style="width: 30px; height: 30px;" version="1.1" xmlns="http://www.w3.org/2000/svg">
+    <circle cx="50%" cy="50%" r="15px"/>
+  </svg>
+  <svg class="dotted-line">
+    <line y2="100%"/>
+  </svg>
+  <i class="fa fa-bars"></i>
+  <i class="fa fa-trash"></i>
+</div>
+
+
+    <a href="#myModal1" role="button" data-target="#myModal1" class="btn btn-default" data-toggle="modal">fadeIn</a>
+    <div id="myModal1" class="modal" data-easein="fadeIn" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="false">
+      <div class="modal-dialog modal-test">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            <h4 class="modal-title" id="myModalLabel">Modal header 1</h4>
+          </div>
+          <div class="modal-body">
+            <p>One fine body…</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+<script>
+var line, bars, trash;
+$(function() {
+  bars = $('#template-container i.fa-bars'),
+  line = $('#template-container svg.dotted-line'),
+  trash = $('#template-container i.fa-trash');
+
+  var container = document.getElementById('test');
+  var sort = Sortable.create(container, {
+    animation: 150, // ms, animation speed moving items when sorting, `0` — without animation
+    handle: "h3", // Restricts sort start click/touch to the specified element
+    draggable: "li", // Specifies which items inside the element should be sortable
+    onUpdate: function (evt){
+       var item = evt.item; // the current dragged HTMLElement
+    }
+  });
+
+  $('.timeline-list ol').each(function() {
+    var elem = $(this)[0];
+    $(this).find('li').prepend(bars.clone());
+    Sortable.create(elem, {
+      animation: 150,
+      group: {name: 'sub'},
+      handle: ".fa-bars"
+    });
+
+  });
+
+  $('.timeline-list .bg').each(function() {
+    var new_line = line.clone();
+    $(this)
+    .append(new_line);
+  });
+
+  $('.timeline-sub-item').each(function() {
+    $(this).append(trash.clone());
+  });
+
+  $('.timeline-sub-item').on('click', '.fa-trash', function() {
+      var elem = $(this).parent();
+      elem.velocity(
+        {opacity: 0},
+        {
+          complete: function() {
+            elem.remove();
+          }
+        }
+      );
+  });
+
+    // add the animation to the popover
+  $('a[rel=popover]').popover().click(function(e) {
+    e.preventDefault();
+    var open = $(this).attr('data-easein');
+    $(this).next().velocity('transition.' + open);
+
+  });
+
+  // add the animation to the modal
+  $(".modal").each(function(index) {
+    $(this).on('show.bs.modal', function(e) {
+      var open = $(this).attr('data-easein');
+      $('.modal-dialog').velocity('transition.' + open);
+    });
+  });
+});
+
+</script>
+</body>
+</html>
