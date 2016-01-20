@@ -14,6 +14,7 @@ section#timeline-container .timeline-list {
 section#timeline-container .timeline-list>li {
   position: relative;
   padding: 0 0 40px 55px;
+  margin-top: -10px;
 }
 
 .timeline-list li {
@@ -34,6 +35,24 @@ section#timeline-container .timeline-list>li {
   line-height: 50px;
   font-size: 20px;
 
+}
+
+.timeline-list>li:last-child {
+  width: 0;
+}
+
+.timeline-list>li:last-child:before {
+  content: "+";
+  background: #ededed;
+  border: 2px solid #224A75;
+  color: #676767;
+  font-size: 40px;
+  cursor: pointer;
+}
+
+.timeline-list>li:last-child:hover:before {
+  background: #224A75;
+  color: #fff;
 }
 
 .timeline-list .bg {
@@ -145,6 +164,8 @@ section#timeline-container .timeline-list li h3 {
   background: #224A75;
   color: #fff;
   text-align: center;
+  border-radius: 6px 6px 0 0;
+  border: 0;
 }
 
 .modal-test button.close {
@@ -152,12 +173,66 @@ section#timeline-container .timeline-list li h3 {
   color: #fff;
   text-shadow: none;
   font-size: 40px;
+  font-weight: lighter;
+  float: none;
+  position: absolute;
+  top: 0;
+  right: 5px;
 }
 
 .modal-test .modal-content {
   box-shadow: none;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  position: relative;
+}
+
+.modal-test .modal-body {
+  background: #fff;
+  border: 0;
+}
+
+.modal-test .modal-footer {
+  background: #fff;
+  border: 0;
+  border-radius: 0 0 6px 6px;
+  text-align: center;
+}
+
+.modal-test ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+.modal-test ul li {
+  text-align: center;
+  margin-bottom: 5px;
+}
+
+.modal-test ul li a {
+  color: #676767;
 }
 
 h4.modal-title {
   font-size: 30px;
+}
+
+.modal-subtitle {
+  font-size: 14px;
+}
+
+.add-subitem {
+  display: block;
+  width: 40px;
+  height: 40px;
+  border-radius: 25px;
+  border: 2px solid #224A75;
+  color: #676767;
+  font-size: 30px;
+  cursor: pointer;
+  vertical-align: middle;
+  text-align: center;
+  line-height: 40px;
 }

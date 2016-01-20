@@ -39,22 +39,49 @@
 
     <li class="timeline-item">
       <div class="bg"></div>
-      <h3>MVP</h3>
+      <h3>Private Beta</h3>
       <ol>
         <li class="timeline-sub-item">
-          <div class="title">Incorporation</div>
+          <div class="title">Fundraising Equity Financing</div>
           <div class="status-container">
             Status: <span class="status">Incomplete</span>
           </div>
         </li>
         <li class="timeline-sub-item">
-          <div class="title">Post-Incorporation</div>
+          <div class="title">Hiring</div>
           <div class="status-container">
             Status: <span class="status">Incomplete</span>
           </div>
         </li>
       </ol>
     </li>
+
+    <li class="timeline-item">
+      <div class="bg"></div>
+      <h3>Grow</h3>
+      <ol>
+        <li class="timeline-sub-item">
+          <div class="title">Sales</div>
+          <div class="status-container">
+            Status: <span class="status">Incomplete</span>
+          </div>
+        </li>
+        <li class="timeline-sub-item">
+          <div class="title">Fundraising</div>
+          <div class="status-container">
+            Status: <span class="status">Incomplete</span>
+          </div>
+        </li>
+        <li class="timeline-sub-item">
+          <div class="title">Hiring</div>
+          <div class="status-container">
+            Status: <span class="status">Incomplete</span>
+          </div>
+        </li>
+      </ol>
+    </li>
+
+    <li class="timeline-item" title="Add new thing"></li>
   </ol>
 </section>
 
@@ -66,7 +93,8 @@
     <line y2="100%"/>
   </svg>
   <i class="fa fa-bars"></i>
-  <i class="fa fa-trash"></i>
+  <i class="fa fa-trash" title="Remove"></i>
+  <i class="add-subitem">+</i>
 </div>
 
 
@@ -77,9 +105,21 @@
           <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
             <h4 class="modal-title" id="myModalLabel">Modal header 1</h4>
+            <div class="modal-subtitle">Incorporate as a Delaware C Corporation</div>
+            <div class="modal-subtitle">Cost: Free</div>
           </div>
           <div class="modal-body">
-            <p>One fine body…</p>
+            <ul>
+              <li><a href="#">Certificate of Incorporation</a></li>
+              <li><a href="#">Filing Request</a></li>
+              <li><a href="#">Filing Institutions</a></li>
+              <li><a href="#">Registered Agent*</a></li>
+              <li><a href="#">C Corp Incorporation</a></li>
+              <li><a href="#">EIN</a></li>
+            </ul>
+          </div>
+          <div class="modal-footer">
+            Questions?
           </div>
         </div>
       </div>
@@ -111,6 +151,7 @@ $(function() {
       handle: ".fa-bars"
     });
 
+    $(this).parent().append($('<i/>').addClass('add-subitem').html('+'));
   });
 
   $('.timeline-list .bg').each(function() {
@@ -123,17 +164,21 @@ $(function() {
     $(this).append(trash.clone());
   });
 
-  $('.timeline-sub-item').on('click', '.fa-trash', function() {
-      var elem = $(this).parent();
-      elem.velocity(
-        {opacity: 0},
-        {
-          complete: function() {
-            elem.remove();
+  $('.timeline-sub-item')
+    .on('click', '.fa-trash', function() {
+        var elem = $(this).parent();
+        elem.velocity(
+          {opacity: 0},
+          {
+            complete: function() {
+              elem.remove();
+            }
           }
-        }
-      );
-  });
+        );
+    })
+    .on('click', ':not(.fa-trash)', function() {
+      $('#myModal1').modal();
+    });
 
     // add the animation to the popover
   $('a[rel=popover]').popover().click(function(e) {
