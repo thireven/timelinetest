@@ -17,6 +17,10 @@ section#timeline-container .timeline-list>li {
   margin-top: -10px;
 }
 
+section#timeline-container .timeline-list>li:first-child {
+  margin-top: 0;
+}
+
 .timeline-list li {
   position: relative;
 }
@@ -37,11 +41,11 @@ section#timeline-container .timeline-list>li {
 
 }
 
-.timeline-list>li:last-child {
+.timeline-list .add-timeline {
   width: 0;
 }
 
-.timeline-list>li:last-child:before {
+.timeline-list .add-timeline:before {
   content: "+";
   background: #ededed;
   border: 2px solid #224A75;
@@ -50,7 +54,7 @@ section#timeline-container .timeline-list>li {
   cursor: pointer;
 }
 
-.timeline-list>li:last-child:hover:before {
+.timeline-list .add-timeline:hover:before {
   background: #224A75;
   color: #fff;
 }

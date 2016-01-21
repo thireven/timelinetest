@@ -81,7 +81,6 @@
       </ol>
     </li>
 
-    <li class="timeline-item" title="Add new thing"></li>
   </ol>
 </section>
 
@@ -97,8 +96,6 @@
   <i class="add-subitem">+</i>
 </div>
 
-
-    <a href="#myModal1" role="button" data-target="#myModal1" class="btn btn-default" data-toggle="modal">fadeIn</a>
     <div id="myModal1" class="modal" data-easein="fadeIn" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="false">
       <div class="modal-dialog modal-test">
         <div class="modal-content">
@@ -126,19 +123,36 @@
     </div>
 
 <script>
-var line, bars, trash;
+var line, bars, trash, timelineContainer;
+
+function addAddTimelineButton() {
+  var button = $('<li/>').addClass('add-timeline');
+  timelineContainer.append(button);
+}
+
+function removeAddTimelineButton() {
+  timelineContainer.find('.add-timeline').remove();
+}
+
 $(function() {
+  timelineContainer = $('.timeline-list'),
   bars = $('#template-container i.fa-bars'),
   line = $('#template-container svg.dotted-line'),
   trash = $('#template-container i.fa-trash');
 
+  addAddTimelineButton();
+
   var container = document.getElementById('test');
+
   var sort = Sortable.create(container, {
     animation: 150, // ms, animation speed moving items when sorting, `0` — without animation
     handle: "h3", // Restricts sort start click/touch to the specified element
     draggable: "li", // Specifies which items inside the element should be sortable
-    onUpdate: function (evt){
-       var item = evt.item; // the current dragged HTMLElement
+    onStart: function(evt) {
+      removeAddTimelineButton();
+    },
+    onEnd: function(evt){
+      addAddTimelineButton();
     }
   });
 
@@ -176,7 +190,7 @@ $(function() {
           }
         );
     })
-    .on('click', ':not(.fa-trash)', function() {
+    .on('click', ':not(.fa-trash,.fa-bars)', function() {
       $('#myModal1').modal();
     });
 
@@ -195,8 +209,9 @@ $(function() {
       $('.modal-dialog').velocity('transition.' + open);
     });
   });
-});
 
+
+});
 </script>
 </body>
 </html>
