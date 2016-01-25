@@ -19,7 +19,6 @@
 <section id="timeline-container">
   <ol class="timeline-list" id="test">
     <li class="timeline-item">
-      <div class="bg"></div>
       <h3>MVP</h3>
       <ol>
         <li class="timeline-sub-item">
@@ -38,7 +37,6 @@
     </li>
 
     <li class="timeline-item">
-      <div class="bg"></div>
       <h3>Private Beta</h3>
       <ol>
         <li class="timeline-sub-item">
@@ -57,7 +55,7 @@
     </li>
 
     <li class="timeline-item">
-      <div class="bg"></div>
+
       <h3>Grow</h3>
       <ol>
         <li class="timeline-sub-item">
@@ -94,6 +92,11 @@
   <i class="fa fa-bars"></i>
   <i class="fa fa-trash" title="Remove"></i>
   <i class="add-subitem">+</i>
+  <div class="move">
+    <svg version="1.1" viewbox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve">
+      <path d="M49.998,0L27,36.498l46,0.004L49.998,0z M50.004,100L73,63.502l-46-0.004L50.004,100z"/>
+    </svg>
+  </div>
 </div>
 
     <div id="myModal1" class="modal" data-easein="fadeIn" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="false">
@@ -122,96 +125,6 @@
       </div>
     </div>
 
-<script>
-var line, bars, trash, timelineContainer;
-
-function addAddTimelineButton() {
-  var button = $('<li/>').addClass('add-timeline');
-  timelineContainer.append(button);
-}
-
-function removeAddTimelineButton() {
-  timelineContainer.find('.add-timeline').remove();
-}
-
-$(function() {
-  timelineContainer = $('.timeline-list'),
-  bars = $('#template-container i.fa-bars'),
-  line = $('#template-container svg.dotted-line'),
-  trash = $('#template-container i.fa-trash');
-
-  addAddTimelineButton();
-
-  var container = document.getElementById('test');
-
-  var sort = Sortable.create(container, {
-    animation: 150, // ms, animation speed moving items when sorting, `0` — without animation
-    handle: "h3", // Restricts sort start click/touch to the specified element
-    draggable: "li", // Specifies which items inside the element should be sortable
-    onStart: function(evt) {
-      removeAddTimelineButton();
-    },
-    onEnd: function(evt){
-      addAddTimelineButton();
-    }
-  });
-
-  $('.timeline-list ol').each(function() {
-    var elem = $(this)[0];
-    $(this).find('li').prepend(bars.clone());
-    Sortable.create(elem, {
-      animation: 150,
-      group: {name: 'sub'},
-      handle: ".fa-bars"
-    });
-
-    $(this).parent().append($('<i/>').addClass('add-subitem').html('+'));
-  });
-
-  $('.timeline-list .bg').each(function() {
-    var new_line = line.clone();
-    $(this)
-    .append(new_line);
-  });
-
-  $('.timeline-sub-item').each(function() {
-    $(this).append(trash.clone());
-  });
-
-  $('.timeline-sub-item')
-    .on('click', '.fa-trash', function() {
-        var elem = $(this).parent();
-        elem.velocity(
-          {opacity: 0},
-          {
-            complete: function() {
-              elem.remove();
-            }
-          }
-        );
-    })
-    .on('click', ':not(.fa-trash,.fa-bars)', function() {
-      $('#myModal1').modal();
-    });
-
-    // add the animation to the popover
-  $('a[rel=popover]').popover().click(function(e) {
-    e.preventDefault();
-    var open = $(this).attr('data-easein');
-    $(this).next().velocity('transition.' + open);
-
-  });
-
-  // add the animation to the modal
-  $(".modal").each(function(index) {
-    $(this).on('show.bs.modal', function(e) {
-      var open = $(this).attr('data-easein');
-      $('.modal-dialog').velocity('transition.' + open);
-    });
-  });
-
-
-});
-</script>
+<script src="timeline.js"></script>
 </body>
 </html>
